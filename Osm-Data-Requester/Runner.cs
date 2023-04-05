@@ -14,12 +14,15 @@ public class Runner
     public async Task Run(List<string> csvContent, int startIndex, int endIndex, string outputPath, int throttle)
     {
         _writer.InitCsv(outputPath);
-        csvContent.RemoveAt(csvContent.Count - 1);
+        if (csvContent.Count > 0)
+        {
+            csvContent.RemoveAt(0);
+        }
         int length = csvContent.Count;
         endIndex = endIndex == -1 ? length : endIndex;
         Console.WriteLine($"Starting requests every {throttle}ms, beginning at index {startIndex + 1} " +
                           $"till {endIndex + 1}. Length of file: {length}.");
-        for (int i = startIndex; i < endIndex + 1; i++)
+        for (int i = startIndex; i < endIndex; i++)
         {
             var value = csvContent[i];
             await Task.Delay(throttle);
