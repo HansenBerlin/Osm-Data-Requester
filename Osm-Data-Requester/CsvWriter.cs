@@ -17,7 +17,7 @@ public class CsvWriter
         }
         else
         {
-            Console.Write($"File at {outputPath} found.");
+            Console.WriteLine($"File at {outputPath} found.");
         }
     }
     
