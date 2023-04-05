@@ -17,7 +17,7 @@ public class Requester
         _client.DefaultRequestHeaders.Add("Accept-Language", "en-US,en;q=0.9");
     }
 
-    public Location Get(string endpoint, int increment)
+    public async Task <Location> Get(string endpoint, int increment)
     {
         string url = $"{BaseUrl}{endpoint}{UrlEnd}";
 
@@ -25,7 +25,7 @@ public class Requester
         stopWatch.Start();
 
         using var request = new HttpRequestMessage(HttpMethod.Get, url);
-        using var response = _client.SendAsync(request).Result;
+        using var response = await _client.SendAsync(request);
         
         
         TimeSpan ts = stopWatch.Elapsed;
@@ -39,7 +39,7 @@ public class Requester
         {
             if (response.IsSuccessStatusCode)
             {
-                json = response.Content.ReadAsStringAsync().Result;
+                json = await response.Content.ReadAsStringAsync();
                 var result = JArray.Parse(json)[0];
                 var lat = result.Value<string>("lat");
                 var lon = result.Value<string>("lon");

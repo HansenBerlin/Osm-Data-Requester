@@ -3,21 +3,36 @@
 public class CsvWriter
 {
     
-    public string[] GetFirstColumnValuesFromCsv(string filePath)
-    {
-        using StreamReader sr = new StreamReader(filePath);
-        string fileContents = sr.ReadToEnd();
-        string[] rows = fileContents.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-        string[] columnValues = new string[rows.Length];
-        for (int i = 1; i < rows.Length; i++)
-        {
-            string[] columns = rows[i].Split(',');
-            columnValues[i] = columns[1];
-        }
+    private const string CsvHeader = "id,lat,lon";
+    private string _outputPath = "";
 
-        return columnValues;
+    public void InitCsv(string outputPath)
+    {
+        _outputPath = outputPath;
+        if (!File.Exists(outputPath))
+        {
+            using var writer = new StreamWriter(outputPath);
+            writer.WriteLine(CsvHeader);
+        }
     }
     
+    
+    public void AppendLocationToCsv(Location location)
+    {
+        using var writer = new StreamWriter(_outputPath, true);
+        var csvLine = $"{GetLastIdInCsv(_outputPath) + 1},{location.Lat},{location.Lon}";
+        writer.WriteLine(csvLine);
+    }
+
+    private int GetLastIdInCsv(string outputPath)
+    {
+        var lastLine = File.ReadLines(outputPath).LastOrDefault();
+        if (lastLine == null || !int.TryParse(lastLine.Split(',')[0], out int lastId))
+        {
+            lastId = 0;
+        }
+        return lastId;
+    }
     
     public void WriteLocationsToCsv(IEnumerable<Location> locations, string outputPath)
     {

@@ -11,8 +11,9 @@ public class Runner
         _writer = writer;
     }
 
-    public async Task Run(string[] csvContent, int startIndex, int endIndex)
+    public async Task Run(string[] csvContent, int startIndex, int endIndex, string outputPath)
     {
+        _writer.InitCsv(outputPath);
         int length = csvContent.Length;
         for (int i = 1 + startIndex; i < endIndex; i++)
         {
@@ -23,8 +24,9 @@ public class Runner
             var value = csvContent[i];
             await Task.Delay(1000);
             var location = await _requester.Get(value, i);
-            Location location = GetLocationFromApi(_client, url, i);
-            return location;
+            _writer.AppendLocationToCsv(location);
+            //Location location = GetLocationFromApi(_client, url, i);
+            //return location;
         }
     }
 }
