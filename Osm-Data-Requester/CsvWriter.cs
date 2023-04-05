@@ -13,6 +13,11 @@ public class CsvWriter
         {
             using var writer = new StreamWriter(outputPath);
             writer.WriteLine(CsvHeader);
+            Console.WriteLine($"Added new file at {outputPath}");
+        }
+        else
+        {
+            Console.Write($"File at {outputPath} found.");
         }
     }
     
