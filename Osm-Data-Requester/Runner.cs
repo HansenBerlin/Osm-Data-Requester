@@ -15,6 +15,7 @@ public class Runner
     {
         _writer.InitCsv(outputPath);
         int length = csvContent.Length;
+        endIndex = endIndex == -1 ? length : endIndex;
         for (int i = 1 + startIndex; i < endIndex; i++)
         {
             if (i - 1 == length)
