@@ -1,8 +1,8 @@
-﻿using Osm_Data_Requester;
+﻿namespace Osm_Data_Requester;
 
 class Program
 {
-    async static Task Main(string[] args)
+    static async Task Main(string[] args)
     {
         string inputPath = "";
         string outputPath = "";
@@ -13,13 +13,6 @@ class Program
         {
             inputPath = args[0];
             outputPath = args[1];
-            if (int.TryParse(args[2], out startIndex)) { }
-            else
-            {
-                startIndex = 0;
-            }
-            if (int.TryParse(args[3], out endIndex)) { }
-            if (int.TryParse(args[4], out throttle)) { }
         }
         catch (Exception e)
         {
@@ -30,6 +23,20 @@ class Program
                               "can add a throttle in ms for the requests.");
             throw;
         }
+
+        switch (args.Length)
+        {
+            case 3:
+                int.TryParse(args[2], out startIndex);
+                break;
+            case 4:
+                int.TryParse(args[3], out endIndex);
+                break;
+            case 5:
+                int.TryParse(args[4], out throttle);
+                break;
+        }
+        
         var httpClient = new HttpClient();
         var requester = new Requester(httpClient);
         var csvWriter = new CsvWriter();
@@ -39,5 +46,3 @@ class Program
         await runner.Run(csvContent, startIndex, endIndex, outputPath, throttle);
     }
 }
-
-
