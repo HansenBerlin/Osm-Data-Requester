@@ -8,6 +8,7 @@ class Program
         string outputPath = "";
         int startIndex = 0;
         int endIndex = -1;
+        int throttle = 1000;
         try
         {
             inputPath = args[0];
@@ -18,13 +19,15 @@ class Program
                 startIndex = 0;
             }
             if (int.TryParse(args[3], out endIndex)) { }
+            if (int.TryParse(args[4], out throttle)) { }
         }
         catch (Exception e)
         {
             Console.WriteLine("Wrong number of arguments provided. Please provide at least an " +
                               "input and outputpath. Additionally you can add an index to start " +
                               "the requests at and an index to end the requests at. When no end " +
-                              "index is provided the whole list will be parsed.");
+                              "index is provided the whole list will be parsed. As fifth argument you" +
+                              "can add a throttle in ms for the requests.");
             throw;
         }
         var httpClient = new HttpClient();
@@ -33,7 +36,7 @@ class Program
         var csvReader = new CsvReader();
         string[] csvContent = csvReader.GetFirstColumnValuesFromCsv(inputPath);
         var runner = new Runner(requester, csvWriter);
-        await runner.Run(csvContent, startIndex, endIndex, outputPath);
+        await runner.Run(csvContent, startIndex, endIndex, outputPath, throttle);
     }
 }
 
