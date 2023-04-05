@@ -17,9 +17,9 @@ class Program
         catch (Exception e)
         {
             Console.WriteLine("Wrong number of arguments provided. Please provide at least an " +
-                              "input and outputpath. Additionally you can add an index to start " +
-                              "the requests at and an index to end the requests at. When no end " +
-                              "index is provided the whole list will be parsed. As fifth argument you" +
+                              "input and outputpath.\nAdditionally you can add an index to start " +
+                              "the requests at and an index to end the requests at. Index is non zero based, so start at 1." +
+                              "When no end index is provided the whole list will be parsed.\nAs fifth argument you" +
                               "can add a throttle in ms for the requests.");
             throw;
         }
@@ -39,6 +39,8 @@ class Program
                 int.TryParse(args[4], out throttle);
                 break;
         }
+
+        startIndex = startIndex < 1 ? 1 : startIndex;
         
         var httpClient = new HttpClient();
         var requester = new Requester(httpClient);

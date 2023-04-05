@@ -35,7 +35,7 @@ public class Requester
         string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
             ts.Hours, ts.Minutes, ts.Seconds,
             ts.Milliseconds / 10);
-        Console.WriteLine($"Request {_requests} for line/index {increment} took {elapsedTime}");
+        Console.WriteLine($"Request {_requests} for line/index {increment + 1} took {elapsedTime}");
         string json = "";
         try
         {
