@@ -6,7 +6,7 @@ class Program
     {
         string inputPath = "";
         string outputPath = "";
-        int startIndex = 0;
+        int startIndex = 1;
         int endIndex = -1;
         int throttle = 1000;
         try
