@@ -22,8 +22,12 @@ public class Runner
         endIndex = endIndex == -1 ? length + 1 : endIndex;
         Console.WriteLine($"Starting requests every {throttle}ms, beginning at index {startIndex} " +
                           $"till {endIndex}. Length of file: {length}.");
-        for (int i = startIndex - 1; i < endIndex - 1; i++)
+        for (int i = startIndex - 1; i < endIndex; i++)
         {
+            if (i == length)
+            {
+                break;
+            }
             var value = csvContent[i];
             await Task.Delay(throttle);
             var location = await _requester.Get(value, i);
