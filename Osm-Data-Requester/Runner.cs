@@ -16,6 +16,7 @@ public class Runner
         _writer.InitCsv(outputPath);
         int length = csvContent.Length;
         endIndex = endIndex == -1 ? length : endIndex;
+        Console.WriteLine($"Starting requests beginning at index {startIndex} till {endIndex}. Length of file: {length}");
         for (int i = 1 + startIndex; i < endIndex + 1; i++)
         {
             if (i == length)
