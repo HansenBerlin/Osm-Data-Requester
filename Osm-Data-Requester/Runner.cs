@@ -20,9 +20,9 @@ public class Runner
         }
         int length = csvContent.Count;
         endIndex = endIndex == -1 ? length : endIndex;
-        Console.WriteLine($"Starting requests every {throttle}ms, beginning at index {startIndex + 1} " +
-                          $"till {endIndex + 1}. Length of file: {length}.");
-        for (int i = startIndex; i < endIndex; i++)
+        Console.WriteLine($"Starting requests every {throttle}ms, beginning at index {startIndex} " +
+                          $"till {endIndex}. Length of file: {length}.");
+        for (int i = startIndex - 1; i < endIndex; i++)
         {
             var value = csvContent[i];
             await Task.Delay(throttle);
