@@ -46,6 +46,6 @@ class Program
         var csvReader = new CsvReader();
         string[] csvContent = csvReader.GetFirstColumnValuesFromCsv(inputPath);
         var runner = new Runner(requester, csvWriter);
-        await runner.Run(csvContent, startIndex, endIndex, outputPath, throttle);
+        await runner.Run(csvContent.ToList(), startIndex, endIndex, outputPath, throttle);
     }
 }

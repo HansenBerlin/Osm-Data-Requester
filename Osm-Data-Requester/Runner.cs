@@ -11,19 +11,16 @@ public class Runner
         _writer = writer;
     }
 
-    public async Task Run(string[] csvContent, int startIndex, int endIndex, string outputPath, int throttle)
+    public async Task Run(List<string> csvContent, int startIndex, int endIndex, string outputPath, int throttle)
     {
         _writer.InitCsv(outputPath);
-        int length = csvContent.Length;
+        csvContent.RemoveAt(csvContent.Count - 1);
+        int length = csvContent.Count;
         endIndex = endIndex == -1 ? length : endIndex;
         Console.WriteLine($"Starting requests every {throttle}ms, beginning at index {startIndex + 1} " +
-                          $"till {endIndex + 1}. Length of file: {length - 1}.");
-        for (int i = 1 + startIndex; i < endIndex + 1; i++)
+                          $"till {endIndex + 1}. Length of file: {length}.");
+        for (int i = startIndex; i < endIndex + 1; i++)
         {
-            if (i == length + 1)
-            {
-                break;
-            }
             var value = csvContent[i];
             await Task.Delay(throttle);
             var location = await _requester.Get(value, i);
