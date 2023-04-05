@@ -19,7 +19,7 @@ public class Runner
             csvContent.RemoveAt(0);
         }
         int length = csvContent.Count;
-        endIndex = endIndex == -1 ? length : endIndex;
+        endIndex = endIndex == -1 ? length : endIndex - 1;
         Console.WriteLine($"Starting requests every {throttle}ms, beginning at index {startIndex} " +
                           $"till {endIndex}. Length of file: {length}.");
         for (int i = startIndex - 1; i < endIndex; i++)
