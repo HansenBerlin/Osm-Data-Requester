@@ -19,15 +19,12 @@ public class Runner
             csvContent.RemoveAt(0);
         }
         int length = csvContent.Count;
-        endIndex = endIndex == -1 ? length : endIndex;
+        endIndex = endIndex == -1 ? length - 1 : endIndex;
         Console.WriteLine($"Starting requests every {throttle}ms, beginning at index {startIndex} " +
-                          $"till {endIndex}. Length of file: {length}.");
+                          $"till {endIndex + 1}. Length of file: {length}.");
         for (int i = startIndex - 1; i < endIndex; i++)
         {
-            Console.WriteLine(i);
-            Console.WriteLine(endIndex);
             var value = csvContent[i];
-            Console.WriteLine(value);
             await Task.Delay(throttle);
             var location = await _requester.Get(value, i);
             _writer.AppendLocationToCsv(location);
