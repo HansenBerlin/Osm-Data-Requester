@@ -9,6 +9,7 @@ public class Requester
     private const string UrlEnd = "&format=json&polygon=1&addressdetails=1";
 
     private readonly HttpClient _client;
+    private int _requests = 0;
 
     public Requester(HttpClient client)
     {
@@ -19,6 +20,7 @@ public class Requester
 
     public async Task <Location> Get(string endpoint, int increment)
     {
+        _requests++;
         string url = $"{BaseUrl}{endpoint}{UrlEnd}";
 
         Stopwatch stopWatch = new Stopwatch();
@@ -33,7 +35,7 @@ public class Requester
         string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
             ts.Hours, ts.Minutes, ts.Seconds,
             ts.Milliseconds / 10);
-        Console.WriteLine($"Abfrage {increment}: {elapsedTime}");
+        Console.WriteLine($"Request {_requests} for line/index {increment} took {elapsedTime}");
         string json = "";
         try
         {
