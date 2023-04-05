@@ -30,9 +30,12 @@ class Program
                 int.TryParse(args[2], out startIndex);
                 break;
             case 4:
+                int.TryParse(args[2], out startIndex);
                 int.TryParse(args[3], out endIndex);
                 break;
             case 5:
+                int.TryParse(args[2], out startIndex);
+                int.TryParse(args[3], out endIndex);
                 int.TryParse(args[4], out throttle);
                 break;
         }
